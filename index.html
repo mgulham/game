@@ -4,22 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <title>Psychic Game</title>
     
 </head>
 <body>
-    <section>
+    <div id="game">
         <h1>The Psychic Game</h1>
         <p>Guess what letter I am thinking of</p>
         <p>Wins:</p>
         <p>Losses:</p>
-        <p>Guess Remaining:</p>
+        <p>Guesses Remaining:</p>
         <p>Guesses so far:</p>
-    </section>
-
-
+    </div>
+<script type="text/javascript">
+//started off by creating variables ouside of function
+let wins = 0;
+    let losses = 0;
+    let guessesRemaining = 9;
+    let guessesMade = []; //empty array to dump user guesses
+    let computerOptions = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']; //list of letters to choose from
+    
+    document.onkeyup = function(event) { 
+        let userGuess = String.fromCharCode(event.keyCode).toLowerCase(); //takes user input and turns it into a variable
+        let computerGuess = computerOptions[Math.floor(Math.random()*computerOptions.length)]; //picks a "random" computer guess
+        guessesMade.push(userGuess); //pushes user input into empty array 
+       
+        if (userGuess == computerGuess) {  //win commands
+            wins++;
+            alert('Congrats! You guessed right!');
+            guessesRemaining = 9; 
+            guessesMade.length = 0; 
+        }
+        else if (guessesRemaining == 0){  //loss commands
+            losses++;
+            alert('Sorry! You guessed wrong. Try Again!');
+            guessesRemaining = 9;
+            guessesMade.length = 0;
+        }
+        else if (userGuess !== computerGuess){ //resets game when your guesses remaining equal 0 
+            guessesRemaining--; 
+        }  
+         
+        let html = "<h1>The Psychic Game</h1>" +  //defines text that will be overwritten in html 
+        "<p>Guess what letter I'm thinking of</p>" +
+        "<p>Wins: " + 
+        wins + 
+        "</p>" +
+        "<p>Losses: " + 
+        losses + 
+        "</p>" +
+        "<p>Guesses Remaining: " + 
+        guessesRemaining + 
+        "</p>" +
+        "<p>Guesses so far: " +
+        guessesMade +
+        "</p>"
+        ;
+        // places text into html
+        document.querySelector('#game').innerHTML = html;
+    }
+</script>
 </body>
 
 </html>
